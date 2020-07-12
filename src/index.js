@@ -13,7 +13,7 @@ app.use(morgan('dev'));
 // global variables
 
 // routes
-
+app.use(require('./routes'));
 // public
 
 // starting the server
