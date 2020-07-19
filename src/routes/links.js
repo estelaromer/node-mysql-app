@@ -5,7 +5,7 @@ const pool = require('../database');
 
 router.get('/add', (req, res) => {
     res.render('../views/links/add');
-})
+});
 
 router.post('/add', async (req, res) => {
     const { title, url, description } = req.body;
@@ -16,10 +16,19 @@ router.post('/add', async (req, res) => {
     };
     try {
         await pool.query('INSERT INTO links set ?', [newLink]);
+        res.redirect('/links');
     } catch (error) {
         console.log(error);
     }
-    res.send('Recibido');
-})
+});
+
+router.get('/', async (req, res) => {
+    try {
+        const links = await pool.query('SELECT * FROM links');
+        res.render('links/list', { links })
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 module.exports = router;
