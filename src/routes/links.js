@@ -31,4 +31,14 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/delete/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        await pool.query('DELETE FROM links WHERE ID = ?', [id]);
+    } catch (error) {
+        console.log(error);
+    }
+    res.redirect('/links');
+});
+
 module.exports = router;
