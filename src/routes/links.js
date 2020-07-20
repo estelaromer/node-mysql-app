@@ -16,6 +16,7 @@ router.post('/add', async (req, res) => {
     };
     try {
         await pool.query('INSERT INTO links set ?', [newLink]);
+        req.flash('success', 'Link saved successfully');
         res.redirect('/links');
     } catch (error) {
         console.log(error);
@@ -35,6 +36,7 @@ router.get('/delete/:id', async (req, res) => {
     const { id } = req.params;
     try {
         await pool.query('DELETE FROM links WHERE ID = ?', [id]);
+        req.flash('success', 'Link deleted successfully.');
     } catch (error) {
         console.log(error);
     }
@@ -61,6 +63,7 @@ router.post('/edit/:id', async (req, res) => {
     };
     try {
         await pool.query('UPDATE links set ? WHERE id = ?', [newLink, id]);
+        req.flash('success', 'Link edited successfully.');
     } catch (error) {
         console.log(error);
     }
